@@ -1,112 +1,109 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+import { AppButton } from '@/components/ui/app-button';
+import { AppCard } from '@/components/ui/app-card';
+import { AppPill } from '@/components/ui/app-pill';
+import { AppText } from '@/components/ui/app-text';
+import { Radius, Spacing } from '@/constants/theme';
 
-export default function TabTwoScreen() {
+const usageRules = [
+  'Reach for `AppCard` before building a one-off container so spacing and elevation stay consistent.',
+  'Use the primary button once per screen section; secondary buttons support adjacent actions without competing.',
+  'Treat coral as a supporting tone for urgency, highlights, and progress moments rather than default CTA color.',
+  'Keep body copy on `textMuted` when the goal is explanation, and promote to `text` only for high-priority content.',
+] as const;
+
+export default function LibraryScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <ScrollView
+      className="flex-1 bg-canvas"
+      contentContainerClassName="gap-6 px-5 pt-4 pb-24"
+      contentInsetAdjustmentBehavior="automatic">
+      <AppCard className="gap-4">
+        <View className="gap-2">
+          <AppText tone="accent" variant="label">
+            Reusable Primitives
+          </AppText>
+          <AppText variant="hero">A small component base that future product features can extend.</AppText>
+          <AppText tone="muted">
+            The goal is consistency first: a shared language for cards, pills, and buttons before
+            the app grows into more specialized flows.
+          </AppText>
+        </View>
+
+        <View className="gap-3">
+          <AppButton detail="Primary CTA" label="Start a flow" />
+          <AppButton detail="Secondary action" label="Review settings" variant="secondary" />
+          <AppButton detail="Low emphasis action" label="Read guidelines" variant="ghost" />
+        </View>
+      </AppCard>
+
+      <View className="gap-3">
+        <AppText variant="title">Component Recipes</AppText>
+        <View className="gap-3">
+          <AppCard className="gap-3">
+            <View className="flex-row flex-wrap gap-2">
+              <AppPill label="semantic tokens" tone="accent" />
+              <AppPill label="continuous radii" tone="neutral" />
+              <AppPill label="future forms" tone="signal" />
+            </View>
+            <AppText variant="subtitle">Cards carry the system.</AppText>
+            <AppText tone="muted">
+              Use raised cards for key sections, muted cards for grouping, and accent-tinted cards
+              when you need to call attention without shouting.
+            </AppText>
+          </AppCard>
+
+          <AppCard tone="accent" className="gap-2">
+            <AppText variant="subtitle">Accent surfaces highlight progress or direction.</AppText>
+            <AppText tone="muted">
+              This is the right treatment for onboarding, summaries, checkpoints, and focused empty
+              states.
+            </AppText>
+          </AppCard>
+        </View>
+      </View>
+
+      <View className="gap-3">
+        <AppText variant="title">Tokens In Practice</AppText>
+        <AppCard tone="muted" className="gap-4">
+          <View className="gap-2">
+            <AppText tone="accent" variant="label">
+              Spacing
+            </AppText>
+            <AppText tone="muted" variant="code">
+              xs {Spacing.xs} | sm {Spacing.sm} | md {Spacing.md} | lg {Spacing.lg} | xl{' '}
+              {Spacing.xl} | xxl {Spacing.xxl}
+            </AppText>
+          </View>
+          <View className="gap-2">
+            <AppText tone="accent" variant="label">
+              Radius
+            </AppText>
+            <AppText tone="muted" variant="code">
+              sm {Radius.sm} | md {Radius.md} | lg {Radius.lg} | xl {Radius.xl}
+            </AppText>
+          </View>
+        </AppCard>
+      </View>
+
+      <View className="gap-3">
+        <AppText variant="title">Usage Rules</AppText>
+        <View className="gap-3">
+          {usageRules.map((rule, index) => (
+            <AppCard key={rule} className="flex-row gap-4">
+              <View className="mt-0.5 h-8 w-8 items-center justify-center rounded-full bg-accent-tint">
+                <AppText tone="accent" variant="bodyStrong">
+                  {index + 1}
+                </AppText>
+              </View>
+              <View className="flex-1">
+                <AppText tone="muted">{rule}</AppText>
+              </View>
+            </AppCard>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});
