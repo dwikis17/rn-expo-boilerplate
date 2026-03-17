@@ -1,14 +1,20 @@
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useMockAuth } from '@/src/auth/mock-auth';
 
 export default function TabLayout() {
+  const { session } = useMockAuth();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
+
+  if (!session) {
+    return <Redirect href="/login" />;
+  }
 
   return (
     <Tabs
@@ -35,7 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Foundations',
+          title: 'Protected',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
